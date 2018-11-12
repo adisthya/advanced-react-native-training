@@ -1,20 +1,21 @@
 // @flow
 
 import * as React from 'react';
-import {View} from 'react-native';
-import Counter from './screens/Counter/Counter';
+// import {View} from 'react-native';
+// import Counter from './screens/Counter/Counter';
+import withColor from './screens/Counter/withColor';
 import withCounter from './screens/Counter/withCounter';
 import CounterComponent from './screens/Counter/CounterComponent';
 
-type Props = {};
+type Props = {
+  counter: number,
+  onDecrement: void,
+  onIncrement: void,
+  randomizeColor: string,
+};
+
 function App(props: Props) {
-  return (
-    <CounterComponent
-      counter={0}
-      onIncrement={() => {}}
-      onDecrement={() => {}}
-    />
-  );
+  return <CounterComponent {...props} />;
 }
 
-export default withCounter(App);
+export default withColor(withCounter(App));

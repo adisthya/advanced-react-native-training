@@ -6,15 +6,19 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text} from '../../core-ui';
 
 type Props = {
+  bgColor: string,
   counter: number,
   onIncrement: () => void,
   onDecrement: () => void,
+  randomizeColor: () => string,
 };
 
 function Counter(props: Props) {
-  let {counter, onIncrement, onDecrement} = props;
+  let {counter, onIncrement, onDecrement, randomizeColor} = props;
+  const rootStyle = [styles.root, {backgroundColor: randomizeColor()}];
+
   return (
-    <View style={styles.root}>
+    <View style={rootStyle}>
       <TouchableOpacity style={styles.button} onPress={onIncrement} />
       <Text style={styles.counterText}>{counter}</Text>
       <TouchableOpacity style={styles.button} onPress={onDecrement} />
