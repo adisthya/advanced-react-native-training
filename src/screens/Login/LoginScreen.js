@@ -25,7 +25,7 @@ function LoginScreen(props: Props) {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.button} title="Login">
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
