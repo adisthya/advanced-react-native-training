@@ -46,6 +46,12 @@ export type TransactionAction =
       payload: {
         data: Transaction;
       };
+    }
+  | {
+      type: 'FILTER_TRANSACTION',
+      payload: {
+        data: 'EXPENSE' | 'INCOME',
+      };
     };
 
 export type RootAction = CounterAction | TransactionAction;

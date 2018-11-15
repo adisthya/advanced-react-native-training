@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import {connect} from 'react-redux';
 import {Button} from '../../core-ui';
 import {WHITE, BLUE_SEA, LIGHT_GREY} from '../../constants/colors';
 import Logo from '../../images/logo.png';
@@ -20,11 +21,14 @@ type State = {
   activeTextInput: 'EMAIL' | 'PASSWORD' | null;
 };
 
-export default class Login extends Component<*, State> {
+class Login extends Component<*, State> {
   state = {
     email: '',
     password: '',
     activeTextInput: null,
+    buttonStyle: {
+      backgroundColor: 'blue',
+    }
   };
 
   render() {
@@ -39,6 +43,7 @@ export default class Login extends Component<*, State> {
             <Text>Username or Email</Text>
             <TextInput
               value={email}
+              placeholder={this.props.email}
               onChangeText={(email) => this.setState({email})}
               onFocus={() => this._setActiveTextInput('EMAIL')}
               style={[
@@ -50,6 +55,7 @@ export default class Login extends Component<*, State> {
             <TextInput
               secureTextEntry
               value={password}
+              placeholder={this.props.password}
               onChangeText={(password) => this.setState({password})}
               onFocus={() => this._setActiveTextInput('PASSWORD')}
               style={[
@@ -58,10 +64,22 @@ export default class Login extends Component<*, State> {
               ]}
             />
           </View>
-          <Button text="SIGN IN" onPress={() => {}} />
+          <Button text='SIGN IN' onPress={this._onSubmit} />
         </KeyboardAvoidingView>
       </View>
     );
+  }
+
+  _onSubmit = () => {
+    const {email, password} = this.state;
+    const {login} = this.props;
+
+    if (login) {
+      login({email, password}).then((state) => {
+        const {token} = this.props;
+        if (token) this.props.navigation.navigate('Dashboard');
+      });
+    }
   }
 
   _setActiveTextInput(activeTextInput: 'EMAIL' | 'PASSWORD' | null) {
@@ -92,3 +110,22 @@ let styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
+
+const mapStateToProps = (state) => {
+  const {login} = state;
+  return {
+    email: login && login.email,
+    password: login && login.password,
+    token: login && login.token,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: async function(payload) {
+      return await dispatch({type: 'LOGIN_USER', payload});
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

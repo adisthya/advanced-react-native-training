@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "precommit": "yarn test",
+    "precommitee": "yarn test",
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "flow-coverage": "flow-coverage-report --config ./.flowcoverage",
@@ -12,17 +12,21 @@
     "jest": "jest --coverage",
     "typecheck": "yarn flow && yarn flow-coverage",
     "test": "npm run lint && yarn typecheck && node node_modules/jest/bin/jest.js",
-    "lint": "eslint . —max-warnings 0"
+    "lint": "eslint . max-warnings 0"
   },
   "dependencies": {
     "class-autobind": "^0.1.4",
+    "numeral": "^2.0.6",
     "react": "16.5.0",
     "react-native": "0.57.1",
     "react-native-calendars": "^1.21.0",
+    "react-native-safe-area-view": "^0.11.0",
+    "react-native-svg": "^8.0.8",
     "react-native-vector-icons": "^6.0.2",
     "react-navigation": "^2.8.0",
     "react-redux": "^5.1.1",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "victory-native": "^31.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",
@@ -47,7 +51,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm -v"
     }
   },
   "rnpm": {

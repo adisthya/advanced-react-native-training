@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import numeral from 'numeral';
 import {View, Text, StyleSheet} from 'react-native';
 
 import {Card, Icon} from '../../../core-ui';
@@ -36,7 +37,7 @@ export default function TransactionCard(props: Transaction) {
               color: isIncome ? BLUE_SEA : RED,
             }}
           >
-            {`${isIncome ? '+' : '-'}${amount}`}
+            {`${isIncome ? '+' : '-'}${numeral(amount).format('$0.0,00')}`}
           </Text>
         </View>
       </View>

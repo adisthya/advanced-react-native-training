@@ -8,6 +8,8 @@ function transactionReducer(
   action: TransactionAction
 ) {
   switch (action.type) {
+    case 'FILTER_TRANSACTION':
+      return filterTransaction(state, action.payload.data);
     case 'ADD_TRANSACTION':
       return addTransaction(state, action.payload.data);
     case 'EDIT_TRANSACTION':
@@ -17,6 +19,14 @@ function transactionReducer(
     default:
       return state;
   }
+}
+
+function filterTransaction(state: Array<Transaction>, data: 'EXPENSE' | 'INCOME') {
+  const transactions: Array<Transactions> = TRANSACTION_LIST.filter((item: Transaction) => {
+    return item.type === data;
+  });
+
+  return [...transactions];
 }
 
 function addTransaction(
