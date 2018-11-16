@@ -27,6 +27,7 @@ class Login extends Component<*, State> {
     password: '',
     activeTextInput: null,
   };
+
   render() {
     let {email, password, activeTextInput} = this.state;
     let {data} = this.props;

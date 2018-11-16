@@ -1,10 +1,14 @@
 // @flow
 
-import {TRANSACTION_LIST} from '../fixture';
-import type {Transaction, TransactionAction} from '../../types';
+import {TRANSACTION_STATE} from '../fixture';
+import type {
+  TransactionState,
+  Transaction,
+  TransactionAction,
+} from '../../types';
 
 function transactionReducer(
-  state: Array<Transaction> = TRANSACTION_LIST,
+  state: TransactionState = TRANSACTION_STATE,
   action: TransactionAction
 ) {
   switch (action.type) {
@@ -15,10 +19,12 @@ function transactionReducer(
     case 'DELETE_TRANSACTION':
       return deleteTransaction(state, action.payload.id);
     case 'UPDATE_TRANSACTIONS': {
-      console.log('transactions : ', action.payload);
       return {
         ...state,
-        ...action.payload.data.data,
+        transactionList: [
+          ...state.transactionList,
+          ...action.payload.transactionList,
+        ],
       };
     }
     default:
@@ -26,19 +32,13 @@ function transactionReducer(
   }
 }
 
-function addTransaction(
-  transactionList: Array<Transaction>,
-  data: Transaction
-) {
-  const newTransactionList = [...transactionList, data];
+function addTransaction(state: TransactionState, data: Transaction) {
+  const newTransactionList = [...state.transactionList, data];
   return newTransactionList;
 }
 
-function editTransaction(
-  transactionList: Array<Transaction>,
-  data: Transaction
-) {
-  let newTransactionList = transactionList.map((transaction) => {
+function editTransaction(state: TransactionState, data: Transaction) {
+  let newTransactionList = state.transactionList.map((transaction) => {
     if (transaction.id === data.id) {
       return data;
     } else {
@@ -48,8 +48,8 @@ function editTransaction(
   return [...newTransactionList];
 }
 
-function deleteTransaction(transactionList: Array<Transaction>, id: string) {
-  let newTransactionList = transactionList.filter(
+function deleteTransaction(state: TransactionState, id: string) {
+  let newTransactionList = state.transactionList.filter(
     (transaction) => transaction.id !== id
   );
   return [...newTransactionList];

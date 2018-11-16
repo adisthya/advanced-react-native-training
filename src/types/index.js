@@ -11,6 +11,11 @@ export type Category =
   | 'savings'
   | 'deposits';
 
+export type TransactionState = {
+  transactionList: Array<Transaction>;
+  isLoading: boolean;
+};
+
 export type Transaction = {
   id: string;
   type: 'EXPENSE' | 'INCOME';
@@ -50,11 +55,11 @@ export type TransactionAction =
   | {
       type: 'UPDATE_TRANSACTIONS';
       payload: {
-        data: Array<Transaction>;
+        transactionList: Array<Transaction>;
       };
     };
 
 export type RootAction = CounterAction | TransactionAction;
 export type RootState = {
-  transaction: Array<Transaction>;
+  transaction: TransactionState;
 };
